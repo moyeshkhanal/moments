@@ -44,15 +44,21 @@ const useCamera = (options: CameraOptions = {}) => {
       } else {
         setCameraError('Camera not supported on this device or browser.');
       }
-    } catch (error) {
-      if (error.name === 'NotAllowedError') {
-        setCameraError('Permission denied. Please allow camera access.');
-      } else if (error.name === 'NotFoundError') {
-        setCameraError('No camera device found.');
-      } else {
-        setCameraError('Error accessing camera.');
-      }
-      console.error('Camera error:', error);
+    } catch (error: unknown) { // Type is now unknown
+        if (error instanceof DOMException) {
+          if (error.name === 'NotAllowedError') {
+            setCameraError('Permission denied. Please allow camera access.');
+          } else if (error.name === 'NotFoundError') {
+            setCameraError('No camera device found.');
+          } else {
+            setCameraError('Error accessing camera.');
+          }
+          console.error('Camera error:', error.message);
+        } else {
+          // Handle or log unexpected errors
+          setCameraError('An unexpected error occurred.');
+          console.error('Unexpected error:', error);
+        }
     }
   };
 

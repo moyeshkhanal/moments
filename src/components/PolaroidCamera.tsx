@@ -1,11 +1,9 @@
 // src/components/PolaroidCamera.tsx
-
 "use client";
 
 import React, { useRef, useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
-import logger from '@/lib/logger';
 import useCamera from '@/hooks/useCamera';
 import PolaroidFrame from './PolaroidFrame';
 
@@ -88,7 +86,7 @@ const PolaroidCamera: React.FC<PolaroidCameraProps> = ({ albumName }) => {
         const fileName = `${uuidv4()}.${fileExt}`;
         const filePath = `${albumName}/${fileName}`;
   
-        const { data, error: uploadError } = await supabase.storage
+        const {error: uploadError } = await supabase.storage
           .from('albums')
           .upload(filePath, blob);
   
@@ -96,13 +94,10 @@ const PolaroidCamera: React.FC<PolaroidCameraProps> = ({ albumName }) => {
           throw uploadError;
         }
   
-        const { data: publicUrlData, error: urlError } = supabase.storage
+        const { data: publicUrlData} = supabase.storage
           .from('albums')
           .getPublicUrl(filePath);
   
-        if (urlError) {
-          throw urlError;
-        }
   
         const publicURL = publicUrlData.publicUrl;
   
