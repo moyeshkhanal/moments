@@ -20,7 +20,7 @@ const useCamera = (options: CameraOptions = {}) => {
 
     const constraints = {
       video: {
-        facingMode: { ideal: facingMode },
+        facingMode: { ideal: 'user' },
         width: { ideal: idealWidth, max: 1920 },
         height: { ideal: idealHeight, max: 1080 },
         frameRate: { ideal: 30, max: 60 },

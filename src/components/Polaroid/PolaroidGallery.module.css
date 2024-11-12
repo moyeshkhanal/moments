@@ -1,0 +1,45 @@
+/* src/styles/PolaroidGallery.module.css */
+
+.galleryContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.polaroid {
+  background: white;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.polaroid img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.caption {
+  padding: 10px;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 768px) {
+  .galleryContainer {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .polaroid {
+    flex: 0 0 auto;
+    width: 80%;
+    margin-right: 10px;
+    scroll-snap-align: center;
+  }
+}

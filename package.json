@@ -17,6 +17,7 @@
     "pino-pretty": "^13.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-swipeable": "^7.0.2",
     "react-webcam": "^7.2.0",
     "uploadthing": "^7.3.0",
     "uuid": "^11.0.3"

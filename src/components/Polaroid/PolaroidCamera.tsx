@@ -153,9 +153,7 @@ const PolaroidCamera: React.FC<PolaroidCameraProps> = ({ albumName }) => {
               autoPlay 
               playsInline 
               className="object-cover w-full h-full"
-              style={{ 
-                transform: 'scaleX(-1)', 
-              }} 
+
             />
           </PolaroidFrame>
           <canvas 

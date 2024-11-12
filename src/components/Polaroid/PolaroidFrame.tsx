@@ -12,9 +12,7 @@ const PolaroidFrame: React.FC<PolaroidFrameProps> = ({ children }) => {
         src="/polaroid-frame.png" 
         alt="Polaroid Frame" 
         className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ 
-            transform: 'scaleX(-1)', // Mirror front camera
-          }} 
+    
       />
     </div>
   );
