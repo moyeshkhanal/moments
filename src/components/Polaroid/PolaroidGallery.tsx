@@ -1,11 +1,9 @@
-// src/components/PolaroidGallery.tsx
-
 'use client';
 
 import React, { useRef } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { useAlbumImages } from '@/hooks/useAlbumImages';
-import Polaroid from '@/components/Polaroid/Polaroid';
+import Polaroid from './Polaroid';
 import styles from './PolaroidGallery.module.css';
 
 interface PolaroidGalleryProps {
@@ -14,22 +12,38 @@ interface PolaroidGalleryProps {
 
 const PolaroidGallery: React.FC<PolaroidGalleryProps> = ({ albumName = '' }) => {
   const { images, loading } = useAlbumImages(albumName);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // Swipe handlers for mobile carousel
   const handlers = useSwipeable({
     onSwipedLeft: () => {
       if (containerRef.current) {
-        containerRef.current.scrollBy({ left: containerRef.current.clientWidth, behavior: 'smooth' });
+        containerRef.current.scrollBy({
+          left: containerRef.current.clientWidth,
+          behavior: 'smooth',
+        });
       }
     },
     onSwipedRight: () => {
       if (containerRef.current) {
-        containerRef.current.scrollBy({ left: -containerRef.current.clientWidth, behavior: 'smooth' });
+        containerRef.current.scrollBy({
+          left: -containerRef.current.clientWidth,
+          behavior: 'smooth',
+        });
       }
     },
     trackMouse: true,
   });
+
+  const { ref: swipeableRef, ...restHandlers } = handlers;
+
+  const combinedRef = (el: HTMLDivElement | null) => {
+    containerRef.current = el;
+    if (typeof swipeableRef === 'function') {
+      swipeableRef(el);
+    } else if (swipeableRef && 'current' in swipeableRef) {
+      (swipeableRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
+    }
+  };
 
   if (loading) {
     return <div>Loading images...</div>;
@@ -40,8 +54,12 @@ const PolaroidGallery: React.FC<PolaroidGalleryProps> = ({ albumName = '' }) => 
   }
 
   return (
-    <div className={styles.galleryContainer} ref={containerRef} {...handlers}>
-      {images.map((image, index) => (
+    <div
+      className={styles.galleryContainer}
+      ref={combinedRef}
+      {...restHandlers}
+    >
+      {images.map((image) => (
         <Polaroid key={image.url} image={image} />
       ))}
     </div>

@@ -1,0 +1,26 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .captureContainer {
+    flex: 0 0 auto;
+  }
+  
+  .galleryContainer {
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .pageContainer {
+      flex-direction: row;
+    }
+  
+    .captureContainer,
+    .galleryContainer {
+      flex: 1 1 50%;
+    }
+  }
+  
